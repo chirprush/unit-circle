@@ -1,7 +1,7 @@
 import { Canvas } from "./draw.js";
 import { Vec } from "./vec.js";
 import { Color } from "./color.js";
-import { Circle, Line, Point } from "./shapes.js";
+import { Circle, Line, Point, Text } from "./shapes.js";
 
 const circle_canvas = new Canvas("circle-canvas");
 const point = new Point(() => new Vec(
@@ -24,6 +24,8 @@ const end_point = new Point(line.end);
 
 const circle = new Circle(point.pos, () => radius);
 
+const text = new Text(() => new Vec(point.pos().x + 10, point.pos().y - 10), () => "θ", '15px "Roboto Mono"');
+
 const frame = () => {
 	requestAnimationFrame(frame);
 	circle_canvas.fill("#03070f");
@@ -31,6 +33,7 @@ const frame = () => {
 	line.render(circle_canvas);
 	end_point.render(circle_canvas);
 	circle.render(circle_canvas);
+	text.render(circle_canvas);
 	angle = (angle + 1) % 360;
 }
 

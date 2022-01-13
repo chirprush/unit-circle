@@ -52,4 +52,21 @@ class Point {
 	}
 }
 
-export { Circle, Line, Point };
+class Text {
+	constructor(pos, text, font, color) {
+		this.pos = pos;
+		this.text = text;
+		this.font = font;
+		this.color = color || new Color(0xffffffff);
+	}
+
+	render(window) {
+		let pos = this.pos();
+		let text = this.text();
+		window.ctx.fillStyle = this.color.toString();
+		window.ctx.font = this.font;
+		window.ctx.fillText(text, pos.x, pos.y);
+	}
+}
+
+export { Circle, Line, Point, Text };
