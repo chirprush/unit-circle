@@ -1,5 +1,6 @@
 import { Canvas } from "./draw.js";
 import { Vec } from "./vec.js";
+import { Color } from "./color.js";
 import { Circle, Line, Point } from "./shapes.js";
 
 const circle_canvas = new Canvas("circle-canvas");
@@ -11,10 +12,13 @@ const point = new Point(() => new Vec(
 let angle = 0;
 const radius = 100;
 
-const line = new Line(point.pos, () => new Vec(
-	radius * Math.cos(angle / 180 * Math.PI) + point.pos().x,
-	radius * Math.sin(angle / 180 * Math.PI) + point.pos().y
-));
+const line = new Line(point.pos, () =>
+	new Vec(
+		radius * Math.cos(angle / 180 * Math.PI) + point.pos().x,
+		radius * Math.sin(angle / 180 * Math.PI) + point.pos().y
+	),
+	new Color(0xffffff7f)
+);
 
 const end_point = new Point(line.end);
 
