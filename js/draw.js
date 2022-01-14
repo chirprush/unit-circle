@@ -21,9 +21,26 @@ class Canvas {
 		}
 	}
 
-	fill(color) {
+	background(color) {
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect(0, 0, this.width, this.height);
+	}
+
+	draw(f) {
+		this.ctx.beginPath();
+		f(this.ctx);
+		this.ctx.closePath();
+	}
+
+	stroke(color, lineWidth) {
+		this.ctx.lineWidth = lineWidth;
+		this.ctx.strokeStyle = color.toString();
+		this.ctx.stroke();
+	}
+
+	fill(color) {
+		this.ctx.fillStyle = color.toString();
+		this.ctx.fill();
 	}
 
 	onMouseDown(event) {
