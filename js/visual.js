@@ -2,27 +2,51 @@ import { Canvas } from "./draw.js";
 import { Vec } from "./vec.js";
 import { Color } from "./color.js";
 import { Circle, Line, Point, RightTriangle, Text } from "./shapes.js";
+import { ShapeSystem } from "./shape_system.js";
 
 const bg = Color.fromHex(0x03070fff);
 const canvas = new Canvas("circle-canvas", true);
 
-const shapes = {
-	center: new Point(() => new Vec(canvas.width / 2, canvas.height / 2)),
-	circle: new Circle(() => shapes.center.pos(), () => 250),
-	x_line: new Line(() => shapes.center.pos(), () => shapes.center.pos().add(new Vec(shapes.circle.r(), 0))),
-	x_text: new Text(() => shapes.x_line.start().add(shapes.x_line.end().sub(shapes.x_line.start()).mult(0.5)).add(new Vec(0, 30)), () => "cos(θ)", 15, true),
-	y_line: new Line(() => shapes.center.pos(), () => shapes.center.pos().add(new Vec(0, -shapes.circle.r()))),
-	y_text: new Text(() => shapes.y_line.start().add(shapes.y_line.end().sub(shapes.x_line.start()).mult(0.5)).add(new Vec(-60, 0)), () => "sin(θ)", 15)
-};
+const system = (() => new ShapeSystem()
+	  .add("center", new Point(
+		  () => new Vec(canvas.width / 2, canvas.height / 2)
+	  ))
+	  .add("circle", new Circle(() => system.get("center").pos, () => 250))
+	  .push()
+	  .add("triangle", new RightTriangle(
+		  () => system.get("center").pos,
+		  () => new Vec(system.get("circle").r, Math.PI / 4)
+			  .toCartesian()
+			  .convert()
+	  ))
+	  .add("x_text", new Text(
+		  () => system.get("center").pos
+			  .add(new Vec(system.get("triangle").length.x * 0.5, 0))
+			  .add(new Vec(0, 30)),
+		  () => "cos(θ)",
+		  15,
+		  true
+	  ))
+	  .add("y_text", new Text(
+		  () => system.get("center").pos
+			  .add(new Vec(system.get("triangle").length.x, system.get("triangle").length.y * 0.5))
+			  .add(new Vec(30, 20)),
+		  () => "sin(θ)",
+		  15,
+		  true
+	  ))
+	  .add("point", new Point(
+		  () => system.get("center").pos
+			  .add(new Vec(system.get("circle").r, Math.PI / 4).toCartesian().convert())
+	  )))();
 
-window.shapes = shapes;
+window.system = system;
+window.Vec = Vec;
 
 const frame = () => {
 	requestAnimationFrame(frame);
 	canvas.background(bg);
-	for (let [_, shape] of Object.entries(shapes)) {
-		shape.render(canvas);
-	}
+	system.render(canvas);
 }
 
 window.onload = frame;

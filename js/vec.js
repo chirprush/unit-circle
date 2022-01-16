@@ -16,11 +16,17 @@ class Vec {
 		return new Vec(this.x * n, this.y * n);
 	}
 
+	convert() {
+		// Negate the y value for converting between "mathematical"
+		// coordinates and the actual canvas drawing coordinates.
+		return new Vec(this.x, -this.y);
+	}
+
 	toPolar() {
 		// A calculator, or a computer in this case, can give a wrong
 		// value for arc tangent, so we have to add the correct angle
 		// measures based on the quadrants to account for this. See:
-		// https://www.mathsisfun.com/polar-cartesian-coordinates.html.
+		// https://www.mathsisfun.com/polar-cartesian-coordinates.html
 		// Also note that some operations maybe be slightly different
 		// because, compared to mathematical graphs, the HTML canvas,
 		// and most computer rendering objects, use a positive y to
