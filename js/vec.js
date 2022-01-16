@@ -16,6 +16,10 @@ class Vec {
 		return new Vec(this.x * n, this.y * n);
 	}
 
+	dist(other) {
+		return Math.sqrt(Math.pow(other.x - this.x, 2) + Math.pow(other.y - this.y, 2));
+	}
+
 	convert() {
 		// Negate the y value for converting between "mathematical"
 		// coordinates and the actual canvas drawing coordinates.

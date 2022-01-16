@@ -29,7 +29,7 @@ class Canvas {
 	draw(f) {
 		this.ctx.beginPath();
 		f(this.ctx);
-		this.ctx.closePath();
+		// this.ctx.closePath();
 	}
 
 	stroke(color, lineWidth) {

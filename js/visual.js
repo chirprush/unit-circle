@@ -8,6 +8,7 @@ const bg = Color.fromHex(0x03070fff);
 const canvas = new Canvas("circle-canvas", true);
 
 const system = (() => new ShapeSystem()
+	  .push()
 	  .add("center", new Point(
 		  () => new Vec(canvas.width / 2, canvas.height / 2)
 	  ))
@@ -18,6 +19,10 @@ const system = (() => new ShapeSystem()
 		  () => new Vec(system.get("circle").r, Math.PI / 4)
 			  .toCartesian()
 			  .convert()
+	  ))
+	  .add("point", new Point(
+		  () => system.get("center").pos
+			  .add(new Vec(system.get("circle").r, Math.PI / 4).toCartesian().convert())
 	  ))
 	  .add("x_text", new Text(
 		  () => system.get("center").pos
@@ -34,10 +39,6 @@ const system = (() => new ShapeSystem()
 		  () => "sin(θ)",
 		  15,
 		  true
-	  ))
-	  .add("point", new Point(
-		  () => system.get("center").pos
-			  .add(new Vec(system.get("circle").r, Math.PI / 4).toCartesian().convert())
 	  )))();
 
 window.system = system;
