@@ -211,7 +211,7 @@ function keyPress(el, event) {
 		let correctCount = document.getElementById("quiz-header-correct");
 		let incorrectCount = document.getElementById("quiz-header-incorrect");
 		let totalCount = document.getElementById("quiz-header-total");
-		let value = el.value;
+		let value = el.value.replaceAll(" ", "");
 		el.disabled = true;
 		let answer = questionType === CosQuestion ? questionValue.getCos() : questionValue.getSin();
 		let isCorrect = value === answer;
