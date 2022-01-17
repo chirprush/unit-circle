@@ -1,0 +1,114 @@
+:root {
+	--header-bg: #0d1216;
+	--header-fg: #848389;
+	--cards-bg: #2c333a;
+	--cards-selected-bg: #343c44;
+	--green: #68a542;
+	--red: #a54d42;
+}
+
+#quiz-view {
+	margin-left: 200px;
+}
+
+#quiz-header {
+	display: flex;
+	width: 100%;
+	height: 6%;
+	background: var(--header-bg);
+	justify-content: space-between;
+	align-items: center;
+}
+
+#quiz-header-left {
+	padding-left: 80px;
+}
+
+#quiz-header-right {
+	padding-right: 80px;
+}
+
+#quiz-header p {
+	display: inline;
+	font-weight: bold;
+}
+
+.quiz-header-text {
+	color: var(--header-fg);
+}
+
+#quiz-header-correct {
+	color: var(--green);
+}
+
+#quiz-header-incorrect {
+	color: var(--red);
+}
+
+#quiz-header-next {
+	margin-left: 30px;
+	padding: 2px;
+	font-size: 15px;
+	color: var(--nav-fg);
+	background: var(--cards-selected-bg);
+	border-color: var(--cards-selected-bg);
+	border-width: 4px;
+	border-radius: 8px;
+	border-style: solid;
+}
+
+#quiz-question-view {
+	height: 50%;
+}
+
+#quiz-question-view p {
+	padding-top: 10%;
+	font-size: 70px;
+	text-align: center;
+}
+
+#quiz-answers-view {
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 30%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#quiz-answers-view div {
+	height: 95%;
+	width: 95%;
+	display: inline;
+	border-radius: 20px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: var(--bg);
+	transition: background 0.25s;
+}
+
+.quiz-answer-neutral {
+	background: var(--cards-bg);
+}
+
+.quiz-answer-neutral:hover {
+	background: var(--cards-selected-bg);
+}
+
+.quiz-answer-correct {
+	background: var(--green);
+}
+
+.quiz-answer-incorrect {
+	background: var(--red);
+}
+
+#quiz-answers-view p {
+	font-size: 25px;
+	text-align: center;
+	/* Flexbox and vertical-align don't work. So, once again, the
+       ultimate problem of centering a div in css stumps me. This is
+       the closest I'll get */
+	padding-top: 21%;
+	padding-bottom: 21%;
+}

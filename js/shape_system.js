@@ -6,6 +6,10 @@ class ShapeEntry {
 }
 
 const smoothTransition = (frame, max_frames) => {
+	// Surprisingly this use of sin() doesn't have anything to do with
+	// circles or trigonometry at all. sin() just makes for a good
+	// smooth, discrete transition function that falls within the range
+	// of [0, 1].
 	return Math.pow(Math.sin(frame / max_frames * Math.PI / 2), 2);
 }
 

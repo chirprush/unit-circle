@@ -25,3 +25,8 @@ body {
 h1 {
 	font-weight: bolder;
 }
+
+button {
+	font-family: "Roboto Mono", monospace;
+	font-weight: bolder;
+}
