@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 :root {
 	--bg: #11161c;
 	--fg: #eceff4;
+	--blue: #467ebf;
+	--purple: #57547f;
+	--yellow: #e5f050;
+	--gray: #676d7f;
+	--green: #68a542;
 }
 
 body {
@@ -22,11 +28,69 @@ body {
 	margin-left: 200px;
 }
 
+a {
+	color: var(--blue);
+}
+
 h1 {
 	font-weight: bolder;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.definition {
+	font-family: "Roboto Mono", monospace;
+	color: var(--yellow);
+	font-size: 19px;
+}
+
+li {
+	font-family: "Roboto", sans-serif;
+	font-size: 18px;
+	padding-bottom: 15px;
 }
 
 button {
 	font-family: "Roboto Mono", monospace;
 	font-weight: bolder;
+}
+
+.paragraph-text {
+	font-size: 20px;
+	font-family: "Roboto", sans-serif;
+}
+
+.paragraph-mono {
+	font-family: "Roboto Mono", monospace;
+}
+
+.math-text {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.space {
+	font-family: "Roboto Mono", monospace;
+}
+
+.func {
+	font-family: "Roboto Mono", monospace;
+	color: var(--blue);
+}
+
+.number {
+	font-family: "Roboto Mono", monospace;
+	color: var(--green);
+}
+
+.ident {
+	font-family: "Roboto Mono", monospace;
+	color: var(--purple);
+}
+
+.symbol {
+	font-family: "Roboto Mono", monospace;
+	color: var(--gray);
 }
