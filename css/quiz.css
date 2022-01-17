@@ -3,6 +3,8 @@
 	--header-fg: #848389;
 	--cards-bg: #2c333a;
 	--cards-selected-bg: #343c44;
+	--input-bg: #21262c;
+	--input-selected-bg: #343c44;
 	--green: #68a542;
 	--red: #a54d42;
 }
@@ -55,6 +57,11 @@
 	border-width: 4px;
 	border-radius: 8px;
 	border-style: solid;
+}
+
+.quiz-tip {
+	color: var(--header-fg);
+	margin-left: 20px;
 }
 
 #quiz-question-view {
@@ -111,4 +118,30 @@
        the closest I'll get */
 	padding-top: 21%;
 	padding-bottom: 21%;
+}
+
+#quiz-answer-field {
+	margin: auto;
+	padding: 12px;
+	font-size: 45px;
+	border-style: none;
+	background: var(--input-bg);
+	transition: background 0.6s;
+}
+
+#quiz-answer-field:focus {
+	background: var(--input-selected-bg);
+	outline: none;
+}
+
+.quiz-field-neutral {
+	color: var(--fg);
+}
+
+.quiz-field-correct {
+	color: var(--green);
+}
+
+.quiz-field-incorrect {
+	color: var(--red);
 }
