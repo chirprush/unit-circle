@@ -16,6 +16,7 @@ const smoothTransition = (frame, max_frames) => {
 class Step {
 	constructor() {
 		this.shapes = [];
+		this.hide = [];
 		this.current_shape = 0;
 		this.frames = 0;
 	}
@@ -58,9 +59,24 @@ class ShapeSystem {
 		this.step = 0;
 	}
 
+	getPreviousStep(current, hide) {
+		let previousStep;
+		for (previousStep = current - 1; previousStep > 0; --previousStep) {
+			if (hide.indexOf(previousStep) < 0) {
+				break;
+			}
+		}
+		return previousStep;
+	}
+
 	render(window) {
+		let hide = this.steps[this.step].hide;
 		for (let i = 0; i <= this.step; ++i) {
-			if (i === 0 || this.steps[i - 1].current_shape >= this.steps[i - 1].shapes.length) {
+			if (hide.indexOf(i) >= 0) {
+				continue;
+			}
+			let previousStep = this.getPreviousStep(i, hide);
+			if (i === 0 || (this.steps[previousStep] && this.steps[previousStep].current_shape >= this.steps[previousStep].shapes.length)) {
 				this.steps[i].render(window);
 			}
 		}
@@ -78,6 +94,11 @@ class ShapeSystem {
 
 	push() {
 		this.steps.push(new Step());
+		return this;
+	}
+
+	hide(i) {
+		this.steps.at(-1).hide.push(i);
 		return this;
 	}
 

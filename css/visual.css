@@ -1,0 +1,14 @@
+.button-container {
+	padding-top: 20px;
+}
+
+button {
+	font-size: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-style: none;
+	background: var(--nav-bg);
+	color: var(--fg);
+}

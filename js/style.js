@@ -90,7 +90,6 @@ const renderText = (text) => {
 }
 
 const renderMath = () => {
-	console.log("hit");
 	// The HTMLCollection returned by getElementsByTagName() is "live"
 	// meaning that it is updating as we change it. This requires the
 	// slight wonkiness that we have here.

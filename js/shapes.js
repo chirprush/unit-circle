@@ -103,7 +103,7 @@ class RightTriangle {
 
 	frames() {
 		let length = this.length;
-		return 2 * Math.floor((length.x + length.y + Math.sqrt(Math.pow(length.x, 2) + Math.pow(length.y, 2))) / pixelsPerFrame);
+		return 5 * Math.floor((Math.abs(length.x) + Math.abs(length.y) + Math.sqrt(Math.pow(length.x, 2) + Math.pow(length.y, 2))) / pixelsPerFrame);
 	}
 
 	render(window, percent) {
@@ -149,7 +149,7 @@ class Text {
 	}
 
 	frames() {
-		return 50;
+		return 25;
 	}
 
 	render(window, percent) {

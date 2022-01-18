@@ -2,6 +2,8 @@
   <head>
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/navbar.css">
+	<link rel="stylesheet" href="css/visual.css">
+	<script src="./js/style.js"></script>
 	<script type="module" src="./js/visual.js"></script>
   </head>
   <body>
@@ -14,6 +16,75 @@
 	<div id="main-view">
 		<h1>Visualization</h1>
 		<canvas id="circle-canvas" width=600 height=600></canvas>
+		<div class="button-container">
+			<button onclick="prevStep()">Prev</button>
+			<button onclick="nextStep()">Next</button>
+		</div>
+		<div id="explanation-view">
+		  <div>
+			<h2>Step 1: A Blank Canvas</h2>
+			<p class="paragraph-text">Welcome to the visualization of the unit circle! As you can see, there is currently nothing yet on the canvas. This is because we're going to look at the unit circle in "steps" and construct it as we go. To move onto the next step and see its explanation, press the <span class="paragraph-mono">Next</span> button below the canvas. If you ever need to recap on a topic or missed something, you can go back to the previous step using the <span class="paragraph-mono">Prev</span> button.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 2: A Circle</h2>
+			<p class="paragraph-text">Wow, would you look at that! We now have circle&mdash;and with smooth animations too! This is going our unit circle. For the purposes of this demonstration, we are going to consider its radius to be <Math>1</Math> unit even though on the canvas it may not appear so. This circle is looking somewhat plain and unlabeled. Let's add some angle measures to fix that.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 3: Some Angles</h2>
+			<p class="paragraph-text">That sure is a lot of angles! In order to keep the canvas a bit cleaner and easier to read, I've decided to omit the equivalent angle measures in degrees. Just know that they work all the same. As you look at the angle representations, try to see if you can find any patterns, especially with the angle denominators. Our next step is now going to be looking at trigonometric function relations to these angles.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 4: The "Wide" Series</h2>
+			<p class="paragraph-text">Now we're finally getting into the good stuff. Here, we have a triangle with one leg angle measure of <Math>&pi;/6</Math>, represented by <Math>&theta;</Math>. Now here's a question, what are the leg lengths? Usually, with only the hypotenuse known, we wouldn't have been able to find the other two using the Pythagorean theorem, but now that we are instilled with the power of trigonometric functions and their abilities, we can use them along with our angle <Math>&theta;</Math> to figure out these measures. We'll start by using <Math>sin()</Math>, which as we recall is <Math>O / H</Math>. Plugging in some values, this gives us the equation <Math>sin(&theta;) = O / 1</Math>. Luckily for us, the hypotenuse, or the radius, is <Math>1</Math>, meaning that all we're left with is <Math>sin(&theta;) = O</Math>. So let's get out our calculators and evaluate <Math>sin(&pi;/6)</Math>. After we press enter we get... <Math>1/2</Math>?! Getting such an even value like this feels almost illegal! Well, now that we have two sides, we can solve for the other using our beloved Pythagorean theorem.</p>
+			<p class="paragraph-text"><Math>sqrt(a^2 + (1/2)^2) = 1</Math></p>
+			<p class="paragraph-text"><Math>a^2 + (1/2)^2 = 1</Math></p>
+			<p class="paragraph-text"><Math>a^2 + 1/4 = 1</Math></p>
+			<p class="paragraph-text"><Math>a^2 = 3/4</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(3/4)</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(3)/sqrt(4)</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(3)/2</Math></p>
+			<p class="paragraph-text">Aren't these such nice values? Because our height or <Math>O</Math> equals <Math>1/2</Math> and our length or <Math>A</Math> equals <Math>sqrt(3)/2</Math>, we can say that the point that hits the circle at the angle <Math>&theta;</Math> is <Math>(sqrt(3)/2, 1/2)</Math>. Looking at this, we can somewhat correlate the value of <Math>cos()</Math> to an x-coordinate and the value of <Math>sin()</Math> to a y-coordinate. We call this the "Wide" triangle because its length is greater than its height. This is used to help differentiate from another triangle type coming up in the future.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 5: All Over the Circle!</h2>
+			<p class="paragraph-text">Because this is a unit <i>circle</i>, we have three other qudrants to work with, and they also have their <Math>&pi;/6</Math> counterparts. This is also akin to reflecting both in the x and y axes. Keep in mind that these reflections will also cause the resulting coordinate values on the circle to be negative (for example: <Math>&pi;/6 = (sqrt(3)/2, 1/2)</Math>, but <Math>5&pi;/6 = (-sqrt(3)/2, 1/2)</Math>). In addition, notice that each of these triangles are the only ones that have an angle measure with a denominator of <Math>6</Math>. This is why we call these triangles the <Math>&pi;/6</Math> or "Wide" triangle <u>series</u>.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 6: The Isosceles Series</h2>
+			<p class="paragraph-text">The next series of triangles that we're working with are the isosceles triangles. We know they are isosceles triangles because there are <Math>&pi;</Math> radians in a triangle, our one angle measure is <Math>&pi;/4</Math> radians, and the right angle is <Math>&pi;/2</Math> radians. Taking the difference of all of these, we get the result of the unknown angle as <Math>&pi;/4</Math>. This result is the exact same angle measure as our other angle, proving that the triangle is isosceles. Because the triangle is a right isosceles triangle, we can also use the Pythagorean theorem to find the other leg lengths.</p>
+			<p class="paragraph-text"><Math>sqrt(2a^2) = 1</Math></p>
+			<p class="paragraph-text"><Math>2a^2 = 1</Math></p>
+			<p class="paragraph-text"><Math>a^2 = 1/2</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(1/2)</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(1)/sqrt(2)</Math></p>
+			<p class="paragraph-text"><Math>a = 1/sqrt(2)</Math></p>
+			<p class="paragraph-text"><Math>a = sqrt(2)/2</Math></p>
+			<p class="paragraph-text">This means that both leg length measures are equal to <Math>sqrt(2)/2</Math>. You can also verify this with the trigonometric functions, which give the same result in the slightly less readable decimal form. This means that these <Math>&pi;/4</Math> angles will correspond to the coordinates <Math>(sqrt(2)/2, sqrt(2)/2)</Math> on the circle.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 7: The "Tall" Series</h2>
+			<p class="paragraph-text">The last series of triangles that appear in the unit circle are the "Tall" triangles. These triangles have an angle measure of <Math>&pi;/3</Math>. If we do the same set of operations as we did in the isosceles triangle step to find the other angle measure, we actually observe an interesting pattern:</p>
+			<p class="paragraph-text"><Math>&pi; - &pi;/2 - &pi;/3</Math></p>
+			<p class="paragraph-text"><Math>&pi;/2 - &pi;/3</Math></p>
+			<p class="paragraph-text"><Math>3&pi;/6 - 2&pi;/6</Math></p>
+			<p class="paragraph-text"><Math>&pi;/6</Math></p>
+			<p class="paragraph-text">This <Math>&pi;/3</Math> triangle was really a <Math>&pi;/6</Math> triangle all along! Nice try, but you're not going to fool us students of trigonometry that easily! This triangle series is actually just a rotation of the previously mentioned "Wide" triangle series. This causes the long and short sides to flip, but the resulting evaluations stay the same. <Math>sin(&theta;)</Math> now equals <Math>sqrt(3)/2</Math> and <Math>cos(&theta;)</Math> is equal to <Math>1/2</Math>. Oh how the tables have turned! Following this, the point on the circle represented by <Math>&theta;</Math> is now <Math>(1/2, sqrt(3)/2)</Math>.</p>
+			<p class="paragraph-text">As like all of the other series, there are equivalent reflections of these triangles in the other three quadrants.</p>
+			<p><br></p>
+		  </div>
+		  <div hidden>
+			<h2>Step 8: A Masterpiece</h2>
+			<p class="paragraph-text">Combining all of these triangles series together, we get a single, comprehensive diagram that is called the unit circle. Now that all of that complex math is done, you can sit back and witness the true of beauty of math.</p>
+			<p class="paragraph-text">You are now officially ready to take the triangle series type quiz and the angle evaluation quiz! These will help you familiarize yourself with the concepts you learned in this lesson. I wish you good luck in your future math endeavors!</p>
+			<p><br></p>
+		  </div>
+		</div>
 	</div>
   </body>
 </html>
