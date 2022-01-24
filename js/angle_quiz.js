@@ -127,19 +127,20 @@ class Degrees {
 	}
 
 	getType() {
-		if (wides.indexOf(this.value) >= 0) {
+		let value = Math.abs(this.value) % 360;
+		if (wides.indexOf(value) >= 0) {
 			return AngleType.Wide;
-		} else if (talls.indexOf(this.value) >= 0) {
+		} else if (talls.indexOf(value) >= 0) {
 			return AngleType.Tall;
-		} else if (isosceleses.indexOf(this.value) >= 0) {
+		} else if (isosceleses.indexOf(value) >= 0) {
 			return AngleType.Isosceles;
-		} else if (this.value == 0) {
+		} else if (value == 0) {
 			return AngleType.Right;
-		} else if (this.value == 90) {
+		} else if (value == 90) {
 			return AngleType.Top;
-		} else if (this.value == 180) {
+		} else if (value == 180) {
 			return AngleType.Left;
-		} else if (this.value == 270) {
+		} else if (value == 270) {
 			return AngleType.Bottom;
 		}
 		throw "This shouldn't happen"
@@ -171,15 +172,16 @@ class Radians {
 	}
 
 	getType() {
+		let num = Math.abs(this.co.num) % this.co.den;
 		switch (this.co.den) {
 		case 1:
-			switch (this.co.num) {
+			switch (num) {
 			case 0: return AngleType.Right;
 			case 1: return AngleType.Left;
 			}
 			break;
 		case 2:
-			switch (this.co.num) {
+			switch (num) {
 			case 1: return AngleType.Top;
 			case 3: return AngleType.Bottom;
 			}
@@ -255,11 +257,22 @@ const getAnswer = (funcType, questionValue) => {
 const nextQuestion = () => {
 	let question = document.getElementById("quiz-question");
 	let isDegrees = Math.round(Math.random());
+	let seed = Math.random();
+	let sign = seed < 0.3 ? -1 : 1;
+	let coterminal = seed >= 0.3 && seed < 0.5;
 	let newQuestionValue = null;
 	if (isDegrees) {
 		newQuestionValue = degreeValues[Math.floor(Math.random() * degreeValues.length)];
+		newQuestionValue.value *= sign;
+		if (coterminal) {
+			newQuestionValue.value += 360;
+		}
 	} else {
 		newQuestionValue = radianValues[Math.floor(Math.random() * radianValues.length)];
+		newQuestionValue.co.num *= sign;
+		if (coterminal) {
+			newQuestionValue.co.num += newQuestionValue.co.den * 2;
+		}
 	}
 	let newFuncType = FuncType.values[Math.floor(Math.random() * FuncType.values.length)];
 	if (funcType !== null && newFuncType.equals(funcType) && questionValue !== null && Object.is(questionValue.constructor.prototype, newQuestionValue.constructor.prototype) && newQuestionValue.equals(questionValue)) {
