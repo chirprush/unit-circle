@@ -78,6 +78,10 @@ class FuncType {
 		this.type = type;
 	}
 
+	equals(other) {
+		return this.type === other.type;
+	}
+
 	getFunc() {
 		switch (this.type) {
 		case "sin": return Math.sin;
@@ -112,6 +116,10 @@ let isosceleses = [45, 135, 225, 315];
 class Degrees {
 	constructor(value) {
 		this.value = value;
+	}
+
+	equals(other) {
+		return this.value === other.value;
 	}
 
 	getValue() {
@@ -152,6 +160,10 @@ class Fraction {
 class Radians {
 	constructor(co) {
 		this.co = co;
+	}
+
+	equals(other) {
+		return this.co.num === other.co.num && this.co.den === other.co.den;
 	}
 
 	getValue() {
@@ -228,7 +240,7 @@ let radianValues = [
 ];
 
 const getSign = (funcType, questionValue) => {
-	return Math.sign(funcType.getFunc()(questionValue.getValue()))
+	return Math.sign(funcType.getFunc()(questionValue.getValue()));
 }
 
 const getAnswer = (funcType, questionValue) => {
@@ -243,12 +255,19 @@ const getAnswer = (funcType, questionValue) => {
 const nextQuestion = () => {
 	let question = document.getElementById("quiz-question");
 	let isDegrees = Math.round(Math.random());
+	let newQuestionValue = null;
 	if (isDegrees) {
-		questionValue = degreeValues[Math.floor(Math.random() * degreeValues.length)];
+		newQuestionValue = degreeValues[Math.floor(Math.random() * degreeValues.length)];
 	} else {
-		questionValue = radianValues[Math.floor(Math.random() * radianValues.length)];
+		newQuestionValue = radianValues[Math.floor(Math.random() * radianValues.length)];
 	}
-	funcType = FuncType.values[Math.floor(Math.random() * FuncType.values.length)];
+	let newFuncType = FuncType.values[Math.floor(Math.random() * FuncType.values.length)];
+	if (funcType !== null && newFuncType.equals(funcType) && questionValue !== null && Object.is(questionValue.constructor.prototype, newQuestionValue.constructor.prototype) && newQuestionValue.equals(questionValue)) {
+		nextQuestion();
+		return
+	}
+	questionValue = newQuestionValue;
+	funcType = newFuncType;
 	question.innerHTML = funcType.type + "(" + questionValue.toString() + ")";
 }
 
