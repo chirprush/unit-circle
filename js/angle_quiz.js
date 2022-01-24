@@ -1,97 +1,140 @@
-const CosQuestion = Symbol("CosQuestion");
-const SinQuestion = Symbol("SinQuestion");
-
 let questionValue = null;
-let questionType = null;
+let funcType = null;
 
-const Wide = Symbol("Wide");
-const Tall = Symbol("Tall");
-const Isosceles = Symbol("Isosceles");
-const VLine = Symbol("VLine");
-const HLine = Symbol("HLine");
-
-const cosAnswer = (sign, type) => {
-	if (sign == 0 || type == VLine) {
-		return "0";
+let answerTable = {
+	"sin" : {
+		"Wide" : "1/2",
+		"Tall" : "sqrt(3)/2",
+		"Isosceles" : "sqrt(2)/2",
+		"Top" : "1",
+		"Bottom" : "1",
+		"Right" : "0",
+		"Left" : "0"
+	},
+	"cos" : {
+		"Wide" : "sqrt(3)/2",
+		"Tall" : "1/2",
+		"Isosceles" : "sqrt(2)/2",
+		"Top" : "0",
+		"Bottom" : "0",
+		"Right" : "1",
+		"Left" : "1"
+	},
+	"tan" : {
+		"Wide" : "sqrt(3)/3",
+		"Tall" : "sqrt(3)",
+		"Isosceles" : "1",
+		"Top" : "undefined",
+		"Bottom" : "undefined",
+		"Right" : "0",
+		"Left" : "0"
+	},
+	"csc" : {
+		"Wide" : "2",
+		"Tall" : "2*sqrt(3)/3",
+		"Isosceles" : "sqrt(2)",
+		"Top" : "1",
+		"Bottom" : "1",
+		"Right" : "undefined",
+		"Left" : "undefined"
+	},
+	"sec" : {
+		"Wide" : "2*sqrt(3)/3",
+		"Tall" : "2",
+		"Isosceles" : "sqrt(2)",
+		"Top" : "undefined",
+		"Bottom" : "undefined",
+		"Right" : "1",
+		"Left" : "1"
+	},
+	"cot" : {
+		"Wide" : "sqrt(3)",
+		"Tall" : "sqrt(3)/3",
+		"Isosceles" : "1",
+		"Top" : "0",
+		"Bottom" : "0",
+		"Right" : "undefined",
+		"Left" : "undefined"
 	}
-	let typeString = "";
-	switch (type) {
-	case Wide:
-		typeString = "sqrt(3)/2";
-		break;
-	case Tall:
-		typeString = "1/2";
-		break;
-	case Isosceles:
-		typeString = "sqrt(2)/2";
-		break;
-	case HLine:
-		typeString = "1";
-		break;
-	}
-	let signString = sign === -1 ? "-" : "";
-	return signString + typeString;
 }
 
-const sinAnswer = (sign, type) => {
-	if (sign == 0 || type == HLine) {
-		return "0";
+class FuncType {
+	static Sin = new FuncType("sin");
+	static Cos = new FuncType("cos");
+	static Tan = new FuncType("tan");
+	static Csc = new FuncType("csc");
+	static Sec = new FuncType("sec");
+	static Cot = new FuncType("cot");
+	static values = [
+		FuncType.Sin,
+		FuncType.Cos,
+		FuncType.Tan,
+		FuncType.Csc,
+		FuncType.Sec,
+		FuncType.Cot,
+	];
+
+	constructor(type) {
+		this.type = type;
 	}
-	let typeString = "";
-	switch (type) {
-	case Wide:
-		typeString = "1/2";
-		break;
-	case Tall:
-		typeString = "sqrt(3)/2";
-		break;
-	case Isosceles:
-		typeString = "sqrt(2)/2";
-		break;
-	case VLine:
-		typeString = "1";
-		break;
+
+	getFunc() {
+		switch (this.type) {
+		case "sin": return Math.sin;
+		case "cos": return Math.cos;
+		case "tan": return Math.tan;
+		case "csc": return (n) => 1 / Math.sin(n);
+		case "sec": return (n) => 1 / Math.cos(n);
+		case "cot": return (n) => 1 / Math.tan(n);
+		}
+		throw "This shouldn't happen"
 	}
-	let signString = sign === -1 ? "-" : "";
-	return signString + typeString;
+}
+
+class AngleType {
+	static Wide = new AngleType("Wide");
+	static Tall = new AngleType("Tall");
+	static Isosceles = new AngleType("Isosceles");
+	static Top = new AngleType("Top");
+	static Bottom = new AngleType("Bottom");
+	static Right = new AngleType("Right");
+	static Left = new AngleType("Left");
+
+	constructor(type) {
+		this.type = type;
+	}
 }
 
 let wides = [30, 150, 210, 330];
 let talls = [60, 120, 240, 300];
 let isosceleses = [45, 135, 225, 315];
-let vlines = [90, 270];
-let hlines = [0, 180];
 
 class Degrees {
 	constructor(value) {
 		this.value = value;
 	}
 
+	getValue() {
+		return this.value / 180 * Math.PI;
+	}
+
 	getType() {
 		if (wides.indexOf(this.value) >= 0) {
-			return Wide;
+			return AngleType.Wide;
 		} else if (talls.indexOf(this.value) >= 0) {
-			return Tall;
+			return AngleType.Tall;
 		} else if (isosceleses.indexOf(this.value) >= 0) {
-			return Isosceles;
-		} else if (vlines.indexOf(this.value) >= 0) {
-			return VLine;
-		} else if (hlines.indexOf(this.value) >= 0) {
-			return HLine;
+			return AngleType.Isosceles;
+		} else if (this.value == 0) {
+			return AngleType.Right;
+		} else if (this.value == 90) {
+			return AngleType.Top;
+		} else if (this.value == 180) {
+			return AngleType.Left;
+		} else if (this.value == 270) {
+			return AngleType.Bottom;
 		}
 		throw "This shouldn't happen"
-	}
-
-	getCos() {
-		let sign = Math.sign(Math.cos(this.value / 180 * Math.PI));
-		let type = this.getType();
-		return cosAnswer(sign, type);
-	}
-
-	getSin() {
-		let sign = Math.sign(Math.sin(this.value / 180 * Math.PI));
-		let type = this.getType();
-		return sinAnswer(sign, type);
 	}
 
 	toString() {
@@ -107,39 +150,41 @@ class Fraction {
 }
 
 class Radians {
-	constructor(coefficient) {
-		this.coefficient = coefficient;
+	constructor(co) {
+		this.co = co;
+	}
+
+	getValue() {
+		return this.co.num / this.co.den * Math.PI;
 	}
 
 	getType() {
-		switch (this.coefficient.den) {
-		case 1: return HLine;
-		case 2: return VLine;
-		case 3: return Tall;
-		case 4: return Isosceles;
-		case 6: return Wide;
+		switch (this.co.den) {
+		case 1:
+			switch (this.co.num) {
+			case 0: return AngleType.Right;
+			case 1: return AngleType.Left;
+			}
+			break;
+		case 2:
+			switch (this.co.num) {
+			case 1: return AngleType.Top;
+			case 3: return AngleType.Bottom;
+			}
+			break;
+		case 3: return AngleType.Tall;
+		case 4: return AngleType.Isosceles;
+		case 6: return AngleType.Wide;
 		}
 		throw "This shouldn't happen"
 	}
 
-	getCos() {
-		let sign = Math.sign(Math.cos(Math.PI * this.coefficient.num / this.coefficient.den));
-		let type = this.getType();
-		return cosAnswer(sign, type);
-	}
-
-	getSin() {
-		let sign = Math.sign(Math.sin(Math.PI * this.coefficient.num / this.coefficient.den));
-		let type = this.getType();
-		return sinAnswer(sign, type);
-	}
-
 	toString() {
-		if (this.coefficient.num === 0) {
+		if (this.co.num === 0) {
 			return "0";
 		}
-		let numeratorString = this.coefficient.num === 1 ? "" : this.coefficient.num.toString();
-		let denominatorString = this.coefficient.den === 1 ? "" : `/${this.coefficient.den}`;
+		let numeratorString = this.co.num === 1 ? "" : this.co.num.toString();
+		let denominatorString = this.co.den === 1 ? "" : `/${this.co.den}`;
 		return numeratorString + "&pi;" + denominatorString;
 	}
 }
@@ -182,6 +227,19 @@ let radianValues = [
 	new Radians(new Fraction(11, 6)),
 ];
 
+const getSign = (funcType, questionValue) => {
+	return Math.sign(funcType.getFunc()(questionValue.getValue()))
+}
+
+const getAnswer = (funcType, questionValue) => {
+	let answer = answerTable[funcType.type][questionValue.getType().type];
+	let sign = getSign(funcType, questionValue);
+	if (answer !== "0" && answer !== "undefined" && sign == -1) {
+		answer = "-" + answer;
+	}
+	return answer;
+}
+
 const nextQuestion = () => {
 	let question = document.getElementById("quiz-question");
 	let isDegrees = Math.round(Math.random());
@@ -190,9 +248,8 @@ const nextQuestion = () => {
 	} else {
 		questionValue = radianValues[Math.floor(Math.random() * radianValues.length)];
 	}
-	questionType = [CosQuestion, SinQuestion][Math.round(Math.random())];
-	let typeString = questionType == CosQuestion ? "cos" : "sin";
-	question.innerHTML = typeString + "(" + questionValue.toString() + ")";
+	funcType = FuncType.values[Math.floor(Math.random() * FuncType.values.length)];
+	question.innerHTML = funcType.type + "(" + questionValue.toString() + ")";
 }
 
 function quizNext(el) {
@@ -213,7 +270,7 @@ function keyPress(el, event) {
 		let totalCount = document.getElementById("quiz-header-total");
 		let value = el.value.replaceAll(" ", "");
 		el.disabled = true;
-		let answer = questionType === CosQuestion ? questionValue.getCos() : questionValue.getSin();
+		let answer = getAnswer(funcType, questionValue);
 		let isCorrect = value === answer;
 		if (isCorrect) {
 			el.className = "quiz-field-correct";
