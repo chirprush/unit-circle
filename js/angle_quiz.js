@@ -197,7 +197,7 @@ class Radians {
 		if (this.co.num === 0) {
 			return "0";
 		}
-		let numeratorString = Math.abs(this.co.num === 1) ? "" : this.co.num.toString();
+		let numeratorString = Math.abs(this.co.num) === 1 ? "" : this.co.num.toString();
 		let denominatorString = this.co.den === 1 ? "" : `/${this.co.den}`;
 		return numeratorString + "&pi;" + denominatorString;
 	}
